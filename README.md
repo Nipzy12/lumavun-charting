@@ -82,5 +82,6 @@ The corresponding license files and provenance notes are preserved under `vendor
 
 ## License
 
-A license for the original LUMAVUN source has not yet been selected. The vendored libraries remain governed by their respective licenses.
+The original LUMAVUN source code is available under the [MIT License](LICENSE), copyright 2026 Nipzy12.
 
+Third-party dependencies remain governed by their respective licenses, as listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The LUMAVUN name, logo, and other brand assets are not licensed under MIT unless a file or accompanying notice expressly says otherwise. Market data is supplied by external providers and remains subject to each provider's terms and applicable rights; the MIT License does not grant rights to that data.
