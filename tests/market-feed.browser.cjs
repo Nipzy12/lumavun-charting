@@ -25,7 +25,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
         close(){if(this.readyState===3)return;this.readyState=3;this.onclose?.({code:1000,reason:'test',wasClean:true});this.dispatchEvent(new Event('close'))}
       }window.WebSocket=Socket;
     });
-    await page.goto(pathToFileURL(path.resolve(__dirname,'../syndicate-trade.html')).href,{waitUntil:'domcontentloaded',timeout:60000});
+    await page.goto(pathToFileURL(path.resolve(__dirname,'../index.html')).href,{waitUntil:'domcontentloaded',timeout:60000});
     await page.waitForFunction(()=>seriesData.length===30&&MarketFeed.getEntry()?.state==='connected');
     assert.match(await page.locator('#marketTitle').innerText(),/BTCUSDT.*BINANCE/);
     await page.evaluate(()=>chart.clampView(0,15));assert.match(await page.locator('#historyState').innerText(),/Loading historical/);await page.waitForFunction(()=>seriesData.length===35);assert.equal(await page.evaluate(()=>chart.view.start),5);

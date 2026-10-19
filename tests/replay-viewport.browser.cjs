@@ -5,7 +5,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
   try{
     const page=await browser.newPage({viewport:{width:1366,height:850}}),errors=[];page.on('pageerror',error=>errors.push(error.message));
     await page.addInitScript(()=>localStorage.setItem('syndicate.layouts.v1',JSON.stringify({version:1,active:'replay',layouts:[{id:'replay',name:'Replay QA',state:{symbol:'BTCUSD',tf:'15m',style:'hollow',indicators:[],volume:false,shapes:[],appearance:{},scale:{},grid:'single',secondary:[],marketSource:'simulated'}}]})));
-    await page.goto(pathToFileURL(path.resolve(__dirname,'../syndicate-trade.html')).href,{waitUntil:'domcontentloaded',timeout:60000});
+    await page.goto(pathToFileURL(path.resolve(__dirname,'../index.html')).href,{waitUntil:'domcontentloaded',timeout:60000});
     await page.waitForFunction(()=>MarketFeed.source==='simulated'&&chart.geometry&&candles.data.length>300);
     await page.evaluate(()=>{chart.clampView(chart.view.start-35,chart.view.count);chart.scaleSettings.auto=false;chart.scaleSettings.manualRange=[chart.priceRange[0]-10,chart.priceRange[1]+15];chart.schedule()});await page.waitForTimeout(100);
     const before=await page.evaluate(()=>({view:{...chart.view},scale:structuredClone(chart.scaleSettings),follow:chart.liveFollow,rightOffset:chart.rightOffset,length:candles.data.length}));

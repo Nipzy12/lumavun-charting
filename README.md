@@ -28,7 +28,7 @@ The application uses plain HTML, CSS, and JavaScript. No build step is required.
    python -m http.server 8000
    ```
 
-3. Open [http://localhost:8000/syndicate-trade.html](http://localhost:8000/syndicate-trade.html).
+3. Open [http://localhost:8000/](http://localhost:8000/).
 
 Using a static server is recommended because browser storage and network behavior are more consistent than when opening the page through `file://`.
 
@@ -63,7 +63,7 @@ Set `PLAYWRIGHT_MODULE` and `BROWSER_PATH` when Playwright or the browser is ins
 
 ## Architecture
 
-- `syndicate-trade.html` — application shell and chart initialization
+- `index.html` — application shell and chart initialization
 - `vibe-trading.js` — financial rendering, viewport, price scale, and time scale extensions
 - `market-adapters.js`, `market-client.js`, `market-feed.js` — provider normalization, history, and real-time feeds
 - `chart-tools.js`, `drawing-editor.js`, `object-settings.js` — drawing system and object editing

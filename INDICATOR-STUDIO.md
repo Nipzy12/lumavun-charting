@@ -2,13 +2,13 @@
 
 ## Menjalankan
 
-Buka `syndicate-trade.html` di browser desktop modern (Edge/Chrome), atau jalankan server statis dari direktori ini:
+Buka `index.html` di browser desktop modern (Edge/Chrome), atau jalankan server statis dari direktori ini:
 
 ```powershell
 python -m http.server 8000
 ```
 
-Lalu buka `http://localhost:8000/syndicate-trade.html`. Server statis lebih sesuai untuk penggunaan rutin karena penyimpanan memiliki origin yang konsisten. Penyimpanan `file://`, localhost, profil browser lain, dan mode privat tidak dibagikan.
+Lalu buka `http://localhost:8000/`. Server statis lebih sesuai untuk penggunaan rutin karena penyimpanan memiliki origin yang konsisten. Penyimpanan `file://`, localhost, profil browser lain, dan mode privat tidak dibagikan.
 
 1. Klik ikon node di sidebar kanan, di bawah Statistik, atau buka **Indikator → Syndicate Indicator Studio**.
 2. Contoh awal: **Close → EMA → Plot Line**. Pilih contoh RSI atau EMA crossover lewat **Contoh graph**.
@@ -38,7 +38,7 @@ File baru:
 
 Perubahan integrasi:
 
-- `syndicate-trade.html`: memuat stylesheet dan modul Studio setelah modul terminal sebelumnya.
+- `index.html`: memuat stylesheet dan modul Studio setelah modul terminal sebelumnya.
 - `vibe-trading.js`: API lokal `removeSeries`, `setStudioMarkers`, dan opsi series `pane: 'oscillator'`. Ini implementasi milik terminal, **bukan klaim API upstream VibeCharts atau Lightweight Charts**. VibeCharts vendor tidak diubah.
 
 ## Kontrak engine

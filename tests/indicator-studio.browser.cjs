@@ -8,7 +8,7 @@ const path=require('node:path');
   try{
     const page=await browser.newPage({viewport:{width:1440,height:950}}),errors=[];
     page.on('pageerror',e=>errors.push(e.message));
-    await page.goto(pathToFileURL(path.resolve(__dirname,'../syndicate-trade.html')).href,{waitUntil:'domcontentloaded',timeout:60000});
+    await page.goto(pathToFileURL(path.resolve(__dirname,'../index.html')).href,{waitUntil:'domcontentloaded',timeout:60000});
     await page.locator('#marketProvider').selectOption('simulated');await page.locator('#indicatorStudioBtn').click();await page.waitForTimeout(350);
     assert.match(await page.locator('#studioStatus').innerText(),/Preview/);
     const baseCount=await page.evaluate(()=>chart.series.length);

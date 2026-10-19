@@ -5,7 +5,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
   try{
     const page=await browser.newPage({viewport:{width:1366,height:850}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
     await page.addInitScript(()=>localStorage.setItem('syndicate.layouts.v1',JSON.stringify({version:1,active:'viewport',layouts:[{id:'viewport',name:'Viewport QA',state:{symbol:'BTCUSD',tf:'15m',style:'hollow',indicators:[],volume:false,shapes:[],appearance:{},scale:{},grid:'single',secondary:[],marketSource:'simulated'}}]})));
-    await page.goto(pathToFileURL(path.resolve(__dirname,'../syndicate-trade.html')).href,{waitUntil:'domcontentloaded',timeout:60000});await page.waitForFunction(()=>MarketFeed.source==='simulated'&&chart.geometry&&candles.data.length>300);
+    await page.goto(pathToFileURL(path.resolve(__dirname,'../index.html')).href,{waitUntil:'domcontentloaded',timeout:60000});await page.waitForFunction(()=>MarketFeed.source==='simulated'&&chart.geometry&&candles.data.length>300);
     const initial=await page.evaluate(()=>({length:candles.data.length,start:chart.geometry.start,count:chart.geometry.count,width:chart.geometry.width,lastX:chart.geometry.x(candles.data.length-1),follow:chart.liveFollow}));
     assert.equal(initial.count,160);assert.equal(initial.length-Math.floor(initial.start),150);assert.ok(initial.width-initial.lastX>initial.width/initial.count*9);assert.equal(initial.follow,true);assert.equal(await page.locator('#goRealtime').isVisible(),false);
     const box=await page.locator('#chart canvas').boundingBox(),centerX=box.x+box.width*.45,centerY=box.y+box.height*.45;
