@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#131314">
+  <title>Lumavun — Charting Terminal</title>
+  <script src="vendor/vibecharts/VibeCharts.js"></script>
+  <script src="vibe-trading.js"></script>
+  <style>
+:root{color-scheme:dark;--bg:#101011;--panel:#18181a;--line:#303033;--text:#d5d5d8;--muted:#939398;--green:#70b7a3;--red:#d58188}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow:hidden}button,input,select{font:inherit}button{cursor:pointer}button,select{color:inherit;background:transparent;border:0;border-radius:4px}button:hover,select:hover{background:#303034}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #7699e8;outline-offset:-2px}button.active{background:#363639;color:#fff}button:disabled{opacity:.4;cursor:default}svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}.toolbar{height:44px;display:flex;align-items:center;gap:5px;padding:0 9px;border-bottom:1px solid var(--line);white-space:nowrap;background:#161617}.logo{display:grid;place-items:center;width:29px;height:29px;background:#dedee1;border-radius:50%;color:#161617;font-size:14px;font-weight:900;margin-right:5px}.symbol{font-weight:650;min-width:83px;padding:8px 10px;text-align:left}.divider{height:23px;width:1px;background:var(--line);margin:0 5px;flex-shrink:0}.tf{display:flex;gap:1px}.tf button{padding:8px 7px}.toolbtn{padding:7px 9px;display:inline-flex;align-items:center;gap:6px}.icon{width:34px;height:34px;display:inline-grid;place-items:center;padding:5px;flex-shrink:0}.spacer{flex:1}.workspace{color:#adadb2;line-height:14px;font-size:11px}.workspace small{display:block;color:#719be8;font-size:9px}.shell{display:grid;grid-template-columns:48px minmax(0,1fr) 43px;height:calc(100dvh - 44px)}.rail{display:flex;align-items:center;flex-direction:column;gap:7px;padding:9px 5px;border-right:1px solid var(--line);background:#131314;min-height:0}.rail.right{border-right:0;border-left:1px solid var(--line)}.rail .separator{height:1px;background:var(--line);width:30px;margin:4px 0}.rail .spacer{min-height:6px}.main{min-width:0;min-height:0;display:flex;flex-direction:column;position:relative}.chart-wrap{position:relative;flex:1;min-height:0}#chart{position:absolute;inset:0}#drawLayer{position:absolute;inset:0;z-index:4;pointer-events:none;touch-action:none}.charttop{position:absolute;top:10px;left:12px;z-index:3;pointer-events:none;max-width:calc(100% - 90px)}.market-heading{display:flex;gap:7px;align-items:center}.gold{display:grid;place-items:center;width:17px;height:17px;border-radius:50%;color:#fff;background:#d4a51c;font-size:10px}h1{font-size:12px;font-weight:500;margin:0}.feed-dot{width:6px;height:6px;border-radius:50%;background:#70b7a3}.market-sub{font-size:9px;color:#77777f;margin:6px 0 0 24px;letter-spacing:.07em}.metrics{display:flex;gap:12px;margin:9px 0 0 24px;color:#85858c;font-size:10px}.metric b{color:#b0b0b5;font-weight:400;margin-left:4px;font-variant-numeric:tabular-nums}.price{display:flex;gap:8px;margin:9px 0 0 24px;align-items:center}.price strong{border:1px solid #5a6675;color:#c9d6e8;padding:5px 9px;border-radius:4px;font-size:12px;font-weight:500}.price small{font-size:10px}.currency{position:absolute;right:8px;top:7px;z-index:3;border:1px solid #39393d;border-radius:4px;padding:4px 7px;color:#a8a8ae;font-size:10px}.watermark{pointer-events:none;position:absolute;inset:0 70px 0 0;z-index:2;display:flex;justify-content:center;align-items:center;flex-direction:column;color:#85858c;opacity:.13}.watermark strong{font-size:clamp(34px,6vw,88px);font-weight:500;letter-spacing:-2px}.watermark span{font-size:clamp(15px,2.4vw,32px);margin-top:2px}.chart-brand{position:absolute;bottom:35px;left:12px;z-index:3;color:#c8c8cb;display:flex;align-items:center;gap:6px;font-weight:750;font-size:15px;pointer-events:none}.chart-brand b{font-style:italic;font-size:23px;letter-spacing:-3px;margin-right:3px}.status{height:33px;flex-shrink:0;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 10px;gap:6px;background:#131314}.ranges{display:flex;gap:3px}.ranges button{padding:5px 7px;font-size:11px}.status-right{display:flex;align-items:center;gap:14px;font-size:10px;color:#9999a0}.demo{font-size:9px;letter-spacing:.08em;color:#787880}.sidebar{display:none;position:absolute;right:43px;top:44px;bottom:0;width:290px;z-index:8;background:#171719;border-left:1px solid var(--line);box-shadow:-12px 0 35px #0005}.watch-open .sidebar{display:flex;flex-direction:column}.sidehead{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;border-bottom:1px solid var(--line)}.sidehead b{font-size:13px;font-weight:600}.search{margin:12px;padding:10px;background:#222225;border:1px solid var(--line);border-radius:4px;color:var(--text);width:calc(100% - 24px)}.watch{flex:1;overflow:auto}.asset{display:flex;justify-content:space-between;padding:15px;cursor:pointer;border-bottom:1px solid #252528}.asset:hover,.asset.active{background:#292a30}.asset b{font-weight:500}.asset small{display:block;color:var(--muted);margin-top:5px;font-size:10px}.asset .right{text-align:right}.up{color:var(--green)!important}.down{color:var(--red)!important}.sidefoot{padding:15px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.8}.settings{position:absolute;right:52px;top:52px;z-index:9;width:275px;padding:16px;background:#202023;border:1px solid #3b3b40;border-radius:7px;box-shadow:0 16px 60px #0008}.settings header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.settings label{display:flex;align-items:center;justify-content:space-between;margin:12px 0;color:#aaaab3}.settings select{background:#303035;padding:6px;max-width:140px}.settings p{color:#85858e;font-size:11px;line-height:1.6}.settings[hidden]{display:none}#chartError{position:absolute;z-index:5;top:45%;left:15%;right:15%;text-align:center;background:#202024;padding:20px;line-height:1.7}.desktop-only{display:inline-flex}@media(min-width:1100px){.watch-open .shell{padding-right:290px}.watch-open .sidebar{right:43px}}@media(max-width:1100px){.optional,.workspace{display:none}.toolbar{gap:2px}.tf button{padding:8px 6px}.demo{display:none}}@media(max-width:760px){.toolbar{overflow-x:auto;scrollbar-width:none;padding:0 5px}.desktop-only,.toolbar>.divider{display:none}.toolbar>.spacer{min-width:5px}.shell{grid-template-columns:39px minmax(0,1fr) 35px}.rail{padding:8px 2px;gap:5px}.icon{width:30px;height:32px}.logo{width:25px;height:25px;flex-shrink:0}.symbol{min-width:73px;padding:7px}.tf button{padding:8px 5px;font-size:11px}.tf .wide-tf{display:none}.sidebar{right:35px;width:min(290px,calc(100vw - 74px))}.metrics{gap:6px;flex-wrap:wrap;max-width:270px;margin-left:0;font-size:9px}.metric:last-child{display:none}.market-sub{margin-left:0}.price{margin-left:0}.price small{display:none}.charttop{left:8px}.status{padding:0 4px}.ranges{gap:0}.ranges button{padding:6px 5px;font-size:10px}.status-right{font-size:9px}.chart-brand{font-size:12px}.chart-brand b{font-size:20px}.settings{right:41px;width:min(275px,calc(100vw - 52px))}.watermark{right:45px}.watermark strong{letter-spacing:-1px}}@media(max-height:540px){.rail{gap:1px;overflow-y:auto}.rail .icon{min-height:29px}.price{display:none}}
+  .market-sub{display:none!important}
+  </style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true"><defs>
+<symbol id="cross" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20" stroke-dasharray="7 3"/></symbol>
+<symbol id="line" viewBox="0 0 24 24"><path d="M5 19 19 5"/><circle cx="4" cy="20" r="2"/><circle cx="20" cy="4" r="2"/></symbol>
+<symbol id="rect" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="1"/><path d="M2 3h4M2 3v4m16-4h4v4M2 17v4h4m12 0h4v-4"/></symbol>
+<symbol id="candle" viewBox="0 0 24 24"><path d="M7 2v4m0 11v5M17 2v8m0 8v4"/><path d="M4 6h6v11H4zM14 10h6v8h-6z"/></symbol>
+<symbol id="layers" viewBox="0 0 24 24"><path d="m3 9 9-6 9 6-9 6-9-6zm0 6 9 6 9-6"/></symbol>
+<symbol id="watchIcon" viewBox="0 0 24 24"><path d="M4 3h16v19l-5-4H4zM8 7h8M8 11h8"/></symbol>
+<symbol id="gear" viewBox="0 0 24 24"><path d="m8 3-2 4-4 2v6l4 2 2 4h8l2-4 4-2V9l-4-2-2-4z"/><circle cx="12" cy="12" r="4"/></symbol>
+<symbol id="expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m8 0h5v-5"/></symbol>
+<symbol id="trash" viewBox="0 0 24 24"><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/></symbol>
+<symbol id="eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7zM3 21 21 3"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="reset" viewBox="0 0 24 24"><path d="M4 9a8 8 0 1 1 0 7M4 3v6h6"/></symbol>
+</defs></svg>
+<header class="toolbar">
+  <div class="logo" title="Lumavun" aria-label="Lumavun">LV</div><button class="symbol" id="symbolBtn" title="Search markets">XAUUSD</button><div class="divider"></div>
+  <nav class="tf" aria-label="Chart timeframe"><button data-tf="1m">1m</button><button data-tf="3m" class="wide-tf">3m</button><button data-tf="5m">5m</button><button data-tf="15m" class="active">15m</button><button data-tf="30m" class="wide-tf">30m</button><button data-tf="1H">1h</button><button data-tf="2H" class="wide-tf">2h</button><button data-tf="4H" class="wide-tf">4h</button><button data-tf="1D">D</button><button data-tf="1W" class="wide-tf">W</button><button data-tf="1M" class="wide-tf">M</button></nav>
+  <div class="divider"></div><button class="toolbtn" id="chartStyleBtn" title="Jenis chart" aria-expanded="false"><svg><use href="#candle"/></svg> <span id="styleName">Candle Kosong</span> &#8964;</button><button class="icon desktop-only" id="settingsBtn" title="Chart settings and indicators" aria-label="Chart settings"><svg><use href="#candle"/></svg></button><button class="toolbtn desktop-only" id="volBtn" title="Toggle volume">▥ <span class="optional">Volume</span></button><div class="divider"></div><button class="toolbtn" id="replayBtn">▷ Replay</button><button class="icon desktop-only" id="resetBtn" title="Fit chart" aria-label="Fit chart"><svg><use href="#reset"/></svg></button><div class="spacer"></div><div class="workspace">Lumavun <span style="color:#777">⌄</span><small>Default workspace</small></div><div class="divider"></div><button class="icon" id="fullscreenBtn" title="Fullscreen" aria-label="Fullscreen"><svg><use href="#expand"/></svg></button>
+</header>
+<div class="shell">
+  <nav class="rail" aria-label="Drawing tools">
+    <button class="icon active" id="cursorBtn" title="Cursor / Escape" aria-label="Cursor"><svg><use href="#cross"/></svg></button>
+    <button class="icon" id="lineBtn" title="Trend line" aria-label="Trend line"><svg><use href="#line"/></svg></button>
+    <button class="icon" id="rectBtn" title="Rectangle" aria-label="Rectangle"><svg><use href="#rect"/></svg></button><div class="separator"></div>
+    <button class="icon" id="drawBtn" title="Toggle drawing" aria-label="Toggle drawing"><svg viewBox="0 0 24 24"><path d="m4 17-1 5 5-1L21 8l-4-4L4 17zm10-10 4 4M4 17l4 4"/></svg></button>
+    <button class="icon" id="hideDraw" title="Hide drawings" aria-label="Hide drawings"><svg><use href="#eye"/></svg></button><div class="separator"></div>
+    <button class="icon" id="clearDraw" title="Delete all drawings" aria-label="Delete drawings"><svg><use href="#trash"/></svg></button><div class="spacer"></div><span title="Lumavun workspace" style="font-size:22px;color:#8b8b91;padding-bottom:6px">☆</span>
+  </nav>
+  <main class="main">
+    <div class="chart-wrap">
+      <div id="chart"></div><canvas id="drawLayer"></canvas>
+      <div class="charttop"><div class="market-heading"><span class="gold">◆</span><h1 id="marketTitle">XAUUSD · 15m · LUMAVUN</h1><span class="feed-dot"></span></div><p class="market-sub" id="marketSub">METALS · SIMULATED DATA</p><div class="metrics"><div class="metric">O<b id="mOpen">—</b></div><div class="metric">H<b id="mHigh">—</b></div><div class="metric">L<b id="mLow">—</b></div><div class="metric">C<b id="mClose">—</b></div><div class="metric">Vol<b id="mVol">—</b></div></div><div class="price"><strong id="lastPrice">—</strong><small id="priceChange">—</small></div></div>
+      <span class="currency">USD ⌄</span><div class="watermark"><strong id="watermarkSymbol">XAUUSD, 15m</strong><span id="watermarkName">Gold / US Dollar</span></div><div class="chart-brand"><b>LV</b> Lumavun</div><div id="chartError" hidden>Chart library could not load.<br>Check your internet connection and reload this page.</div>
+    </div>
+    <footer class="status"><nav class="ranges" aria-label="Date range"><button data-range="1">1D</button><button data-range="5">5D</button><button data-range="30">1M</button><button data-range="90">3M</button><button data-range="180">6M</button><button id="allRange">All</button></nav><div class="status-right"><span class="demo">SIMULATED DATA</span><span id="clock"></span></div></footer>
+  </main>
+  <nav class="rail right" aria-label="Chart panels"><button class="icon" id="watchToggle" title="Watchlist" aria-label="Toggle watchlist"><svg><use href="#watchIcon"/></svg></button><button class="icon" id="panelSettings" title="Chart settings" aria-label="Chart settings" onclick="document.getElementById('settingsBtn').click()"><svg><use href="#gear"/></svg></button><div class="separator"></div><button class="icon" title="Drawing visibility" aria-label="Drawing visibility" onclick="document.getElementById('hideDraw').click()"><svg><use href="#layers"/></svg></button><div class="spacer"></div><span title="Locally generated demo data" style="border:1px solid #666;border-radius:50%;padding:2px 6px;margin-bottom:4px">i</span></nav>
+</div>
+<aside class="sidebar"><div class="sidehead"><b>Watchlist</b><button id="closeWatch" class="icon" aria-label="Close watchlist">✕</button></div><input class="search" id="search" placeholder="Search symbol or market" aria-label="Search markets"><div class="watch" id="watch"></div><div class="sidefoot">5 markets · Demo workspace<br>Prices are simulated, not live market data.</div></aside>
+<section class="settings" id="settings" hidden aria-label="Chart settings"><header><strong>Chart settings</strong><button id="closeSettings" aria-label="Close settings">✕</button></header><label>Candle style<select id="candleType"><option value="bar">Bar</option><option value="candlestick">Candle</option><option value="hollow" selected>Candle Kosong</option><option value="line">Garis</option><option value="markers">Garis dengan penanda</option><option value="step">Garis tangga</option><option value="area">Area</option><option value="highlow">Tertinggi-Terendah</option><option value="heikin">Heikin Ashi</option></select></label><label>Indicators<select id="indicators" multiple size="3"><option value="ema20">EMA 20</option><option value="ema50">EMA 50</option><option value="sma20">SMA 20</option></select></label><p>Ctrl / ⌘ + click to select multiple indicators.</p><label>Drawing tool<select id="drawTool"><option value="line">Trend line</option><option value="rect">Rectangle</option></select></label><p>Use the cursor tool to pan and zoom. Drawings follow chart coordinates.</p></section>
+<script>
+
+  const markets=[{symbol:'BTCUSD',label:'BTC / USD',name:'Bitcoin / US Dollar',type:'CRYPTO',base:68240,vol:.011,seed:11},{symbol:'ETHUSD',label:'ETH / USD',name:'Ethereum / US Dollar',type:'CRYPTO',base:2580,vol:.014,seed:22},{symbol:'SOLUSD',label:'SOL / USD',name:'Solana / US Dollar',type:'CRYPTO',base:152,vol:.02,seed:33},{symbol:'EURUSD',label:'EUR / USD',name:'Euro / US Dollar',type:'FOREX',base:1.0862,vol:.0015,seed:44},{symbol:'XAUUSD',label:'XAU / USD',name:'Gold / US Dollar',type:'METALS',base:4158,vol:.0015,seed:55}];
+  let current=markets[4],tf='15m',emaOn=false,volOn=false,chart,candles,ema20,ema50,sma20,volume,seriesData=[];
+  const $=id=>document.getElementById(id);
+  function rng(seed){let a=seed;return()=>{a=(a*1664525+1013904223)>>>0;return a/4294967296}}
+  function interval(t){return {'1m':60,'3m':180,'5m':300,'15m':900,'30m':1800,'1H':3600,'2H':7200,'4H':14400,'1D':86400,'1W':604800,'1M':2592000}[t]}
+  function generate(m,t){const random=rng(m.seed+interval(t)),step=interval(t),end=Math.floor(Date.now()/1000/step)*step;let p=m.base*.94,out=[];for(let i=310;i>=0;i--){const open=p,delta=(random()-.475)*m.vol*2.1,close=Math.max(.0001,open*(1+delta)),high=Math.max(open,close)*(1+random()*m.vol*.65),low=Math.min(open,close)*(1-random()*m.vol*.65);out.push({time:end-i*step,open,high,low,close,volume:Math.round(200+random()*1800)});p=close}return out}
+  function ema(data,period){if(!data.length)return [];const k=2/(period+1);let v=data[0].close;return data.map(d=>{v=d.close*k+v*(1-k);return {time:d.time,value:v}})}
+  function sma(data,period){let out=[],sum=0;for(let i=0;i<data.length;i++){sum+=data[i].close;if(i>=period)sum-=data[i-period].close; if(i>=period-1)out.push({time:data[i].time,value:sum/period})}return out}
+  function toHeikinAshi(data){if(!data.length)return [];let ha=[],prev={close:data[0].close,open:data[0].open};for(const d of data){const close=(d.open+d.high+d.low+d.close)/4;const open=(prev.open+prev.close)/2;const high=Math.max(d.high,open,close);const low=Math.min(d.low,open,close);ha.push({time:d.time,open,high,low,close,volume:d.volume});prev={open,close};}return ha}
+  function fmt(v){return v.toLocaleString('en-US',{minimumFractionDigits:current.base<2?4:2,maximumFractionDigits:current.base<2?5:2})}
+
+  // Drawing layer
+  const drawCanvas = $('drawLayer');
+  const drawCtx = drawCanvas.getContext('2d');
+  let drawing=false, drawEnabled=false, drawStart=null, shapes=[];
+  function resizeDraw(){drawCanvas.width=$('chart').clientWidth;drawCanvas.height=$('chart').clientHeight}
+  window.addEventListener('resize',resizeDraw);
+  function redrawShapes(){window.renderDrawings?.();}
+
+  // Replay
+  let replayTimer=null, replayIndex=0, replaySeries=[], replayActive=false;
+  function applySeriesToChart(data){const type=$('candleType').value;const out = type==='heikin'?toHeikinAshi(data):data; if(candles){candles.applyOptions({chartStyle:type});candles.setData(out);} if(volume) volume.setData(volOn?out.map(d=>({time:d.time,value:d.volume,color:d.close>=d.open?'#285b4f':'#65383e'})):[]); // indicators
+    const inds = Array.from($('indicators').selectedOptions).map(o=>o.value);
+    if(inds.includes('ema20') && ema20) ema20.setData(ema(out,20)); else if(ema20) ema20.setData([]);
+    if(inds.includes('ema50') && ema50) ema50.setData(ema(out,50)); else if(ema50) ema50.setData([]);
+    if(inds.includes('sma20')){ if(!sma20) sma20=chart.addLineSeries({color:'#6fb3d2',lineWidth:1,priceLineVisible:false,lastValueVisible:false}); sma20.setData(sma(out,20)) } else if(sma20) sma20.setData([]);
+}
+
+  function init(){resizeDraw();
+    if(typeof VibeCharts==='undefined'){$('chartError').hidden=false;renderWatch();return}
+    {
+    chart=new VibeTradingChart('chart');
+    candles=chart.addCandlestickSeries({upColor:'#252526',downColor:'#bdbdbf',borderVisible:true,borderUpColor:'#98989c',borderDownColor:'#bdbdbf',wickUpColor:'#99999e',wickDownColor:'#99999e',priceFormat:{type:'price',precision:5,minMove:.00001}});
+    ema20=chart.addLineSeries({color:'#d8b879',lineWidth:1,priceLineVisible:false,lastValueVisible:false});
+    ema50=chart.addLineSeries({color:'#8e9fcd',lineWidth:1,priceLineVisible:false,lastValueVisible:false});
+    volume=chart.addHistogramSeries({priceFormat:{type:'volume'},priceScaleId:'vol',lastValueVisible:false,priceLineVisible:false});
+    new ResizeObserver(()=>{chart.applyOptions({width:$('chart').clientWidth,height:$('chart').clientHeight});resizeDraw();redrawShapes();}).observe($('chart'));
+    chart.subscribeCrosshairMove(p=>{const d=p.seriesData.get(candles);if(d)metrics({...d,volume:(seriesData.find(x=>x.time===d.time)||{}).volume||0})});
+  }
+  load();}
+
+  function metrics(d){$('mOpen').textContent=fmt(d.open);$('mHigh').textContent=fmt(d.high);$('mLow').textContent=fmt(d.low);$('mClose').textContent=fmt(d.close);$('mVol').textContent=Number(d.volume).toLocaleString('en-US')}
+
+  function load(){chart.timeframeSeconds=interval(tf);chart.marketCalendar=current.type==='CRYPTO'?'24x7':'forex';seriesData=window.MarketFeed?MarketFeed.getBars(current,tf):generate(current,tf);if(!seriesData.length){chart?.series.forEach(s=>s.setData([]));renderWatch();return;}const type=$('candleType').value;const out=type==='heikin'?toHeikinAshi(seriesData):seriesData; if(candles) candles.applyOptions({priceFormat:{type:'price',precision:current.base<2?5:2,minMove:current.base<2?.00001:.01}}); if(candles){candles.applyOptions({chartStyle:type});candles.setData(out);}
+    const inds = Array.from($('indicators').selectedOptions).map(o=>o.value);
+    if(inds.includes('ema20') && ema20) ema20.setData(ema(out,20)); else if(ema20) ema20.setData([]);
+    if(inds.includes('ema50') && ema50) ema50.setData(ema(out,50)); else if(ema50) ema50.setData([]);
+    if(inds.includes('sma20')){ if(!sma20) sma20=chart.addLineSeries({color:'#6fb3d2',lineWidth:1,priceLineVisible:false,lastValueVisible:false}); sma20.setData(sma(out,20)) } else if(sma20) sma20.setData([]);
+    if(volume) volume.setData(volOn?out.map(d=>({time:d.time,value:d.volume,color:d.close>=d.open?'#285b4f':'#65383e'})):[]);
+    const last=out.at(-1),prev=out.at(-2)||out.at(-1),change=(last.close/prev.close-1)*100;$('marketTitle').textContent=current.symbol+' · '+tf+' · LUMAVUN';$('watermarkSymbol').textContent=current.symbol+', '+tf;$('watermarkName').textContent=current.name;$('marketSub').textContent=`${current.type} · SIMULATED DATA`;$('symbolBtn').textContent=current.symbol;$('lastPrice').textContent=fmt(last.close);$('priceChange').textContent=(change>=0?'+':'')+change.toFixed(2)+'% · LAST CANDLE';$('priceChange').style.color=change>=0?'#5ac8a5':'#ed797b';metrics(last);renderWatch();}
+
+  function renderWatch(){const q=$('search').value.toLowerCase();$('watch').innerHTML='';markets.filter(m=>(m.symbol+' '+m.name+' '+m.label).toLowerCase().includes(q)).forEach(m=>{const d=generate(m,tf),last=d.at(-1),prev=d.at(-2),change=(last.close/prev.close-1)*100;const el=document.createElement('div');el.className='asset'+(current.symbol===m.symbol?' active':'');el.innerHTML=`<div><b>${m.label}</b><small>${m.type}</small></div><div class="right"><b>${last.close.toLocaleString('en-US',{maximumFractionDigits:m.base<2?5:2,minimumFractionDigits:m.base<2?4:2})}</b><small class="${change>=0?'up':'down'}">${change>=0?'+':''}${change.toFixed(2)}%</small></div>`;el.tabIndex=0;el.setAttribute('role','button');el.onkeydown=e=>{if(e.key==='Enter')el.click()};el.onclick=()=>{if(replayActive)stopReplay();current=m;load();document.body.classList.remove('watch-open')};$('watch').append(el)})}
+
+  // UI bindings
+  document.querySelectorAll('[data-tf]').forEach(b=>b.onclick=()=>{if(replayActive)stopReplay();tf=b.dataset.tf;document.querySelectorAll('[data-tf]').forEach(x=>x.classList.toggle('active',x===b));load()});
+  $('volBtn').onclick=()=>{volOn=!volOn;$('volBtn').classList.toggle('active',volOn);refreshChart()};
+  $('resetBtn').onclick=()=>chart?.timeScale().resetToLatest();
+  $('search').oninput=renderWatch;$('symbolBtn').onclick=()=>{document.body.classList.add('watch-open');$('search').focus()};
+
+  // Candle type
+  $('candleType').onchange=()=>refreshChart();
+
+  // Indicators
+  $('indicators').onchange=()=>refreshChart();
+
+  // Drawing controls
+  $('drawBtn').onclick=()=>{drawEnabled=!drawEnabled;drawCanvas.style.pointerEvents=drawEnabled?'auto':'none';$('drawBtn').classList.toggle('active',drawEnabled)};
+  $('clearDraw').onclick=()=>{shapes=[];redrawShapes()};
+
+  // Replay
+  
+
+  // ensure draw canvas sized
+  setTimeout(resizeDraw,50);
+
+  // Init on load
+  init();
+  $('watchToggle').onclick=()=>document.body.classList.toggle('watch-open');
+  $('closeWatch').onclick=()=>document.body.classList.remove('watch-open');
+  $('settingsBtn').onclick=()=>{$('settings').hidden=!$('settings').hidden};
+  $('closeSettings').onclick=()=>{$('settings').hidden=true};
+  $('fullscreenBtn').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{}};
+  $('cursorBtn').onclick=()=>{drawEnabled=false;drawCanvas.style.pointerEvents='none';$('drawBtn').classList.remove('active')};
+  $('rectBtn').onclick=()=>{$('drawTool').value='rect';if(!drawEnabled)$('drawBtn').click()};
+  $('lineBtn').onclick=()=>{$('drawTool').value='line';if(!drawEnabled)$('drawBtn').click()};
+  $('hideDraw').onclick=()=>{drawCanvas.hidden=!drawCanvas.hidden;$('hideDraw').classList.toggle('active',drawCanvas.hidden)};
+  document.querySelectorAll('[data-range]').forEach(b=>b.onclick=()=>{if(!chart)return;document.querySelectorAll('[data-range]').forEach(x=>x.classList.toggle('active',x===b));const end=seriesData.at(-1).time;chart.timeScale().setVisibleRange({from:Math.max(seriesData[0].time,end-Number(b.dataset.range)*86400),to:end})});
+  $('allRange').onclick=()=>chart?.timeScale().fitContent();
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('watch-open');$('settings').hidden=true;$('cursorBtn').click()}});
+  function clock(){ $('clock').textContent=new Intl.DateTimeFormat('en-GB',{timeZone:chart?.appearance?.timezone||'Asia/Makassar',hour:'2-digit',minute:'2-digit',second:'2-digit',timeZoneName:'shortOffset'}).format(new Date()) }clock();setInterval(clock,1000);
+
+  
+</script>
+<script src="chart-controls.js"></script>
+<script src="chart-tools.js"></script>
+<script src="drawing-editor.js"></script>
+<script src="object-settings.js"></script>
+<script src="chart-settings.js"></script>
+<script src="workspace-panels.js"></script>
+<script src="tool-palette.js"></script>
+<script src="symbol-search.js"></script>
+<script src="advanced-alerts.js"></script>
+<script src="layout-workspace.js"></script>
+<script src="toolbar-layout.js"></script>
+<script src="simulated-charts.js"></script>
+<script src="indicator-legend.js"></script>
+<script src="chart-navigation.js"></script>
+<link rel="stylesheet" href="indicator-studio.css">
+<script src="indicator-nodes.js"></script>
+<script src="indicator-engine.js"></script>
+<script src="indicator-storage.js"></script>
+<script src="indicator-preview.js"></script>
+<script src="indicator-studio.js"></script>
+<script src="vendor/signalr/signalr.min.js"></script>
+<script src="market-adapters.js"></script>
+<script src="historical-cache.js"></script>
+<script src="market-client.js"></script>
+<script src="market-feed.js"></script>
+</body>
+</html>
+
+
