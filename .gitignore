@@ -16,6 +16,7 @@ coverage/
 .cache/
 .parcel-cache/
 .vite/
+.vercel/
 
 # Test and temporary output
 playwright-report/
@@ -33,4 +34,3 @@ test-results/
 .DS_Store
 Thumbs.db
 desktop.ini
-
